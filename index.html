@@ -1,62 +1,32 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-     crossorigin=""/>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
 
-    
-    <title>Document</title>
+
+  <title>Document</title>
 </head>
+
 <body>
-    <div id="mapid" style="width: 100%; height: 600px"></div>
-    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js"></script>
+  <select name="chou" id="a" onchange="selectName(this)">
+    <option value=""></option>
+    <option value="榎本町">榎本町</option>
+    <option value="亀田本町">亀田本町</option>
+  </select>
+  <div id="mapid" style="width: 100%; height: 600px"></div>
 
-    <script>
-    // jsonデータを読み込み
-async function jsonRead() {
-  const response = await fetch('榎本町.geojson');
-  const json = await response.json();
-  console.log(json);
-  L.geoJson(json,
-    {	
-      onEachFeature: function onEachFeature(feature,layer){
-        if(feature.properties && feature.properties.地番){
-          layer.bindPopup(feature.properties.地番);
-        }
-      }
-    }).addTo(map);
-  map.fitBounds(L.geoJson(json).getBounds());
-  return json;
-};
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js"></script>
 
-      var map = L.map('mapid').setView([41.768671,140.728962], 15);
-  
-      var gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
-        attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
-        maxZoom: 20,
-        maxNativeZoom: 18
-      });
-  
-      var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-      });
-  
-      var baseMaps = {
-        "地理院地図" : gsi,
-        "OpenStreetMap" : osm
-      };
-      L.control.layers(baseMaps).addTo(map);
-      gsi.addTo(map);
-  
-jsonRead();
+  <script src="js/main.js"></script>
 
 
 
-    </script>
-  </body>
+</body>
+
 </html>
