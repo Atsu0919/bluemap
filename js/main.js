@@ -3,12 +3,48 @@ async function jsonRead(name) {
     let path = 'json/' + name + '.geojson';
     const response = await fetch(path);
     const json = await response.json();
-    console.log(json);
-    L.geoJson(json,
+
+    let mystyle = {
+        "weight": 1,
+
+    };
+    function highlightFeature(e) {
+        var layer = e.target;
+
+        layer.setStyle({
+            weight: 2,
+            color: '#e51400',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            layer.bringToFront();
+        }
+    }
+
+    function resetHighlight(e) {
+        geojson.resetStyle(e.target);
+    }
+    function writeContent(e) {
+        var layer = e.target;
+        let text = document.getElementById('contents');
+        text.innerHTML = Object.entries(layer.feature.properties);
+    }
+
+    geojson = L.geoJson(json,
         {
+            style: mystyle,
             onEachFeature: function onEachFeature(feature, layer) {
                 if (feature.properties && feature.properties.地番) {
-                    layer.bindPopup(feature.properties.地番);
+                    let popcontents = feature.properties.大字名 +  feature.properties.地番;
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight,
+                        click: writeContent
+                    });
+
+                    layer.bindPopup(popcontents);
                 }
             }
         }).addTo(map);
