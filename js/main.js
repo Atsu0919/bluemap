@@ -38,8 +38,12 @@ async function jsonRead(name) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
+        let h = [];
+        Object.keys(layer.feature.properties).forEach(function (key) {
+            h.push(`<li>${key}:${layer.feature.properties[key]}</li>`)
+        });
         let text = document.getElementById('contents');
-        text.innerHTML = Object.entries(layer.feature.properties);
+        text.innerHTML = h.join('');
     }
 
     geojson = L.geoJson(json,
@@ -47,7 +51,7 @@ async function jsonRead(name) {
             style: mystyle,
             onEachFeature: function onEachFeature(feature, layer) {
                 if (feature.properties && feature.properties.地番) {
-                    let popcontents = feature.properties.大字名 +  feature.properties.地番;
+                    let popcontents = feature.properties.大字名 + feature.properties.地番;
                     layer.on({
                         mouseover: highlightFeature,
                         mouseout: resetHighlight,
