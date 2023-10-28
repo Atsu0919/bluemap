@@ -13,7 +13,7 @@ async function jsonRead(name) {
 
         layer.setStyle({
             weight: 2,
-            color: '#e51400',
+            color: '#178fc5',
             dashArray: '',
             fillOpacity: 0.7
         });
@@ -28,6 +28,16 @@ async function jsonRead(name) {
     }
     function writeContent(e) {
         var layer = e.target;
+        layer.setStyle({
+            weight: 2,
+            color: '#ce4760',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            layer.bringToFront();
+        }
         let text = document.getElementById('contents');
         text.innerHTML = Object.entries(layer.feature.properties);
     }
