@@ -54,6 +54,10 @@ async function jsonRead(name) {
         let text = document.getElementById('contents');
         text.innerHTML = h.join('');
     }
+   
+    if (map.hasLayer(geojson)) {
+        map.removeLayer(geojson);
+    };
 
     geojson = L.geoJson(json,
         {
@@ -72,11 +76,12 @@ async function jsonRead(name) {
             }
         }).addTo(map);
     map.fitBounds(L.geoJson(json).getBounds());
+  
     return json;
 };
 
-var map = L.map('mapid').setView([41.768671, 140.728962], 15);
-
+var map = L.map('mapid').setView([41.768671, 140.728962], 14);
+let geojson
 var gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
     attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
     maxZoom: 20,
