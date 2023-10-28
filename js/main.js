@@ -98,7 +98,9 @@ var gsi = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png'
 });
 
 var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+    attribution: "© <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors",
+    maxZoom: 20,
+    maxNativeZoom: 18
 });
 
 var baseMaps = {
@@ -108,8 +110,24 @@ var baseMaps = {
 L.control.layers(baseMaps).addTo(map);
 gsi.addTo(map);
 
+outputPos(map);
+//マップムーブイベント
+map.on('move', function (e) {
+    //マップムーブイベントで値を出力
+    outputPos(map);
+});
+
+//現在の緯度・経度・倍率を取得して指定の要素に情報を出力する関数
+function outputPos(map) {
+    var pos = map.getCenter();
+    var zoom = map.getZoom();
+    //spanに出力
+    document.getElementById('lat_span').innerHTML = pos.lat;
+    document.getElementById('lng_span').innerHTML = pos.lng;
+    document.getElementById('zoom_span').innerHTML = zoom;
+};
 function selectName(obj) {
     var idx = obj.selectedIndex;
     var value = obj.options[idx].value;
     jsonRead(value)
-}
+};
