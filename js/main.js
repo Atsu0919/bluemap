@@ -13,9 +13,18 @@ async function jsonRead(name) {
     const response = await fetch(path);
     const json = await response.json();
 
-    let mystyle = {
-        "weight": 1,
-
+    function mystyle(feature) {
+        let mystyle = {
+            weight: 1,
+            color: "#026ec1"
+        };
+        if (feature.properties.座標系 == '任意座標系') {
+            mystyle = {
+                weight: 1,
+                color: "#347901"
+            };
+        }
+        return mystyle;
     };
     function highlightFeature(e) {
         var layer = e.target;
@@ -54,7 +63,7 @@ async function jsonRead(name) {
         let text = document.getElementById('contents');
         text.innerHTML = h.join('');
     }
-   
+
     if (map.hasLayer(geojson)) {
         map.removeLayer(geojson);
     };
@@ -76,7 +85,7 @@ async function jsonRead(name) {
             }
         }).addTo(map);
     map.fitBounds(L.geoJson(json).getBounds());
-  
+
     return json;
 };
 
