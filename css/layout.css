@@ -1,34 +1,51 @@
-.container {
-    display: grid;
-    width: 100%;
-    gap: 1em;
-    grid-template-areas: "left-side main right-side"; /*  子要素の`grid-area`で定められた名前に従って配置 */
-    grid-template-columns: 100px 3fr 1fr; /* 要素の幅 */
+body {
+  margin: 0;
 }
+div#mapid {
+  width: 100%;
+  height: calc(100vh - 7em);
+}
+
+.container {
+  display: grid;
+  width: 100%;
+  /*gap: 1em;*/
+  grid-template-areas: "left-side main right-side";
+  /*  子要素の`grid-area`で定められた名前に従って配置 */
+  grid-template-columns: 100px 3fr 1fr;
+  /* 要素の幅 */
+}
+
 .side-container {
-    display: contents; /* 後述 */
-  }
-  
-  .left-side {
-    grid-area: left-side; /* サイドバー */
-    border-right: 2px solid;
-  }
-  
-  .right-side {
-    grid-area: right-side; /* 目次(toc) */
-    border-left: 2px dashed;
-  }
-  
-  .main-contents {
-    grid-area: main; /* メイン */
-  }
-  
-  .header {
-    padding: 0.5em;
-    border-bottom: 2px dotted;
-  }
-  
-  .footer {
-    background: gray;
-    padding: 0.5em;
-  }
+  display: contents;
+  /* 後述 */
+}
+
+.left-side {
+  grid-area: left-side;
+  /* サイドバー */
+  border-right: 2px solid;
+}
+
+.right-side {
+  grid-area: right-side;
+  /* 目次(toc) */
+  border-left: 2px dashed;
+}
+
+.main-contents {
+  grid-area: main;
+  /* メイン */
+}
+
+.header {
+  padding: 0.5em;
+  height: 2em;
+  /*border-bottom: 2px dotted;*/
+}
+
+.footer {
+  background: gray;
+  height: 1em;
+  padding: 0.5em;
+}
