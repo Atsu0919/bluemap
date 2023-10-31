@@ -68,6 +68,10 @@ async function jsonRead(name) {
         map.removeLayer(geojson);
     };
 
+    let point = turf.center(json);
+    L.geoJson(point).addTo(map);
+    console.log(point);
+    
     geojson = L.geoJson(json,
         {
             style: mystyle,
