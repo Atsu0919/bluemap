@@ -68,10 +68,17 @@ async function jsonRead(name) {
         map.removeLayer(geojson);
     };
 
-    let point = turf.center(json);
-    L.geoJson(point).addTo(map);
-    console.log(point);
-    
+    turf.geomEach(json, function (currentGeometry, featureIndex, featureProperties, featureBBox, featureId
+    ) {
+        console.log(currentGeometry);
+        let point = turf.centroid(currentGeometry);
+        console.log(point);
+
+        L.geoJson(point).addTo(map);
+    });
+
+
+
     geojson = L.geoJson(json,
         {
             style: mystyle,
