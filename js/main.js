@@ -2,8 +2,8 @@ function readFirst() {
     //プルダウンリストをループ処理で値を取り出してセレクトボックスにセットする
     for (var i = 0; i < list.length; i++) {
         let opt = document.createElement("option");
-        opt.value = list[i].val;  //value値
-        opt.text = list[i].txt;   //テキスト値
+        opt.value = list[i];  //value値
+        opt.text = list[i];   //テキスト値
         document.getElementById("pullDownList").appendChild(opt);
     }
 };
@@ -73,8 +73,25 @@ async function jsonRead(name) {
         console.log(currentGeometry);
         let point = turf.centroid(currentGeometry);
         console.log(point);
+        let icon = L.divIcon({
+            html: featureProperties.地番,
+            className: 'my-icon-class',
+            iconSize: [30,10],
+        })
+        let pointLayer = L.geoJson(point, {
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, { icon: icon });
+            }
+        });
+        map.on('zoomend', function () {
+            var currentZoom = map.getZoom();
+            if (currentZoom >= 20) {
+                pointLayer.addTo(map);
+            } else {
+                map.removeLayer(pointLayer);
+            }
+        });
 
-        L.geoJson(point).addTo(map);
     });
 
 

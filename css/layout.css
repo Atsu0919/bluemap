@@ -49,3 +49,8 @@ div#mapid {
   height: 1em;
   padding: 0.5em;
 }
+
+.my-icon-class {
+color: black;
+font-size: 8pt;
+}
